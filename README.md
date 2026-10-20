@@ -4,6 +4,8 @@
 
 # MeetSift
 
+English · [Korean](README.ko.md)
+
 **From recording to meeting notes.**
 
 Import a recording, review the transcript and speakers, then turn it into decisions and action items.
@@ -27,21 +29,21 @@ cd meetsift
 
 Setup installs isolated Python environments and pinned MOSS/Nemotron models, builds the app and checks CUDA. Allow several GB of downloads; Ubuntu may ask for your sudo password. GPU setup covers transcription and diarization. Connect ChatGPT or a model server to generate minutes.
 
-For external audio providers, use `-Mode Remote` and configure both audio stages in **모델·공급자 설정**. A [Windows ZIP](https://github.com/ImJongHyuk/meetsift/releases/latest) is also available.
+For external audio providers, use `-Mode Remote` and configure both audio stages in provider settings. A [Windows ZIP](https://github.com/ImJongHyuk/meetsift/releases/latest) is also available.
 
 [Installation & troubleshooting](docs/INSTALL.md) · [Providers](docs/PROVIDERS.md) · [ChatGPT](docs/CHATGPT-EXTENSION.md)
 
-## AI Agent로 설치·검증
+## Install and test with an AI agent
 
-다른 기기의 터미널 AI Agent에 아래 요청을 붙여 넣으세요. **녹음 경로와 화자 수만 바꾸면 됩니다.**
+Paste this request into a terminal AI agent on another machine. **Replace the recording path and speaker count.**
 
 ```text
-https://github.com/ImJongHyuk/meetsift 를 클론하고 AGENTS.md에 따라 설치해줘.
-D:\Recordings\sample.m4a(화자 2명)로 로컬 GPU 통합 테스트를 실행하고 결과를 로컬에 남겨줘.
-GPU를 쓸 수 없거나 테스트가 실패하면 원인과 다음 조치를 알려줘.
+Clone https://github.com/ImJongHyuk/meetsift and install it following AGENTS.md.
+Run the local GPU integration test on D:\Recordings\sample.m4a with 2 speakers; keep results locally.
+If GPU support is unavailable or a test fails, explain the cause and next steps.
 ```
 
-NVIDIA GPU와 처리 권한이 있는 짧은 녹음이 필요합니다. [직접 실행·Ubuntu 명령](docs/GPU-TEST.md)
+Requires an NVIDIA GPU and a short recording you are authorized to process. [Manual and Ubuntu commands](docs/GPU-TEST.md)
 
 ## Data & license
 

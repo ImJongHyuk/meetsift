@@ -1,6 +1,6 @@
 {
   "name": "meetsift",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "type": "module",
   "main": "dist-desktop/main.js",
@@ -8,7 +8,7 @@
     "check:public": "node scripts/check-public-surface.mjs",
     "test:catalog": "tsc -p tsconfig.desktop.json && node --test desktop/tests/model-catalog.test.mjs",
     "dev": "vite --host 127.0.0.1 --port 5173",
-    "build": "node desktop/clean-build.mjs && npm run build:chatgpt && tsc -p tsconfig.json && vite build && tsc -p tsconfig.desktop.json && node desktop/copy-preload.mjs",
+    "build": "node desktop/clean-build.mjs && npm run build:chatgpt && tsc -p tsconfig.json && vite build && tsc -p tsconfig.desktop.json && node desktop/copy-assets.mjs",
     "start": "npm run build && npm run desktop",
     "desktop": "node node_modules/electron/install.js && electron .",
     "pack:win": "npm run build && electron-builder --win portable",
@@ -57,7 +57,8 @@
       }
     ],
     "win": {
-      "target": "portable"
+      "target": "portable",
+      "icon": "docs/assets/meetsift-icon.png"
     },
     "artifactName": "meetsift-${version}-win-${arch}.${ext}",
     "extraFiles": [
@@ -76,6 +77,10 @@
       {
         "from": "README.md",
         "to": "README.md"
+      },
+      {
+        "from": "README.ko.md",
+        "to": "README.ko.md"
       },
       {
         "from": "docs",

@@ -10,6 +10,7 @@ import { OpenRouterCatalog } from './model-catalog.js';
 const openRouterCatalog=new OpenRouterCatalog();
 const here=dirname(fileURLToPath(import.meta.url));
 const root=join(here,'..');
+if(process.platform==='win32')app.setAppUserModelId('personal.meeting-notes');
 // Preserve existing accounts and settings across the product rename.
 // An explicit profile override always takes precedence.
 if(!app.commandLine.hasSwitch('user-data-dir')){
@@ -48,7 +49,7 @@ async function startBackend(){
 app.whenReady().then(async()=>{
  await startBackend();
  protocol.handle('meeting-audio',async request=>{const url=new URL(request.url);if(url.hostname!=='job'||!/^\/[a-zA-Z0-9_-]+$/.test(url.pathname))return new Response(null,{status:400});return fetch(`${backendOrigin}/api/jobs${url.pathname}/audio`,{headers:{Authorization:`Bearer ${backendToken}`,...(request.headers.get('Range')?{Range:request.headers.get('Range')!}:{})}});});
- win=new BrowserWindow({width:1450,height:980,minWidth:820,minHeight:650,backgroundColor:'#ffffff',title:'MeetSift',webPreferences:{preload:join(here,'preload.cjs'),contextIsolation:true,nodeIntegration:false,sandbox:true}});
+ win=new BrowserWindow({width:1450,height:980,minWidth:820,minHeight:650,backgroundColor:'#ffffff',title:'MeetSift',icon:join(here,'icon.png'),webPreferences:{preload:join(here,'preload.cjs'),contextIsolation:true,nodeIntegration:false,sandbox:true}});
  win.webContents.setWindowOpenHandler(()=>({action:'deny'}));
  win.webContents.on('will-navigate',event=>event.preventDefault());
  handle('backend:request',async(path:unknown,method:string='GET',body:unknown)=>{validPath(path);if(!['GET','PATCH','POST'].includes(method))throw Error('Invalid method');try{const response=await backend(path,{method,...(body!==undefined?{headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{})});return response.headers.get('content-type')?.includes('json')?response.json():response.text();}catch(error){if(backendIssue)throw Error(backendIssue);throw error;}});
