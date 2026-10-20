@@ -1,4 +1,5 @@
 import {execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
 import {readFileSync,existsSync} from 'node:fs';
 import {resolve,relative,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -12,10 +13,19 @@ const rules=[
  ['credential',/\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|sk-(?:or-v1-)?[A-Za-z0-9_-]{30,}|AKIA[A-Z0-9]{16})\b|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/],
 ];
 const findings=[];
+// Only this reviewed product image may bypass the binary-file check.
+// Keep earlier reviewed hashes if an asset changes, so history stays checked.
+const reviewedAssets=new Map([
+ ['docs/assets/meetsift-icon.png',new Set(['fa8fd345672e37a10bc4fd9df67020d04b6b242524af8ebfe3170bde3172dc85'])],
+]);
 function inspect(file,buffer,revision){
  const location=revision?{revision,file}:{file};
  if(forbiddenPath.test(file))findings.push({...location,issue:'local state or work record'});
- if(buffer.includes(0)){findings.push({...location,issue:'binary file requires explicit review'});return;}
+ if(buffer.includes(0)){
+  const hash=createHash('sha256').update(buffer).digest('hex');
+  if(!reviewedAssets.get(file)?.has(hash))findings.push({...location,issue:'binary file requires explicit review'});
+  return;
+ }
  const lines=buffer.toString('utf8').split(/\r?\n/);
  for(let i=0;i<lines.length;i++)for(const [issue,pattern] of rules)if(pattern.test(lines[i]))findings.push({...location,line:i+1,issue});
 }

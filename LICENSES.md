@@ -1,10 +1,10 @@
 # Licenses
 
-## MeetSift code: MIT
+## MeetSift code and assets: MIT
 
-MeetSift's independently authored code, including the ChatGPT interface and
-`extensions/chatgpt/src/index.ts`, build scripts and integration documentation,
-uses the [MIT License](LICENSES/MIT.txt). Preserve its copyright and permission
+MeetSift's independently authored code, documentation and artwork use the
+[MIT License](LICENSES/MIT.txt). This includes the ChatGPT interface,
+`extensions/chatgpt/src/index.ts` and build scripts. Preserve the copyright and permission
 notice when redistributing that code. The exceptions below are not relicensed.
 
 ## OpenAI components: noncommercial

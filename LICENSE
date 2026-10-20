@@ -1,6 +1,6 @@
 MeetSift license scope
 
-MeetSift's independently authored application code and documentation are licensed
+MeetSift's independently authored code, documentation and artwork are licensed
 under the MIT License in LICENSES/MIT.txt.
 
 OpenAI's SDK in extensions/chatgpt/vendor/siwc-local/ and the copied adapter
