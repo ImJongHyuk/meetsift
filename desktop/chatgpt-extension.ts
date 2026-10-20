@@ -16,13 +16,13 @@ export type ChatExtension={
  generate:(request:ExtensionRequest)=>Promise<{text:string}>;
  onSession:(listener:(session:ExtensionSession)=>void)=>()=>void;
 };
-const unavailableMessage='ChatGPT 연동은 별도 확장이 필요합니다. 확장 안내를 확인하거나 다른 회의록 공급자를 선택하세요.';
+const unavailableMessage='ChatGPT 연동을 사용할 수 없습니다. 설치 상태를 확인하거나 다른 회의록 공급자를 선택하세요.';
 function unavailable(message=unavailableMessage):ChatExtension{
  const reject=async():Promise<never>=>{throw Error(message);};
  return {apiVersion:1,available:false,session:async()=>({status:'unavailable',sharing:false,available:false,error:{message}}),login:reject,logout:reject,cancelLogin:()=>{},models:reject,generate:reject,onSession:()=>()=>{}};
 }
-// Extensions are explicitly installed, trusted local code. The MIT core neither
-// downloads them nor includes their source, dependencies or license grants.
+// The bundled adapter has its own license scope. An explicit path may load
+// trusted local integration code; the MIT grant does not relicense the SDK.
 export async function loadChatExtension(path:string|undefined,host:ExtensionHost):Promise<ChatExtension>{
  if(!path)return unavailable();
  if(!isAbsolute(path))return unavailable('ChatGPT 확장 파일은 절대 경로로 지정하세요.');

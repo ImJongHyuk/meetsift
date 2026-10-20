@@ -1,6 +1,6 @@
 {
   "name": "meetsift",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "main": "dist-desktop/main.js",
@@ -8,17 +8,20 @@
     "check:public": "node scripts/check-public-surface.mjs",
     "test:catalog": "tsc -p tsconfig.desktop.json && node --test desktop/tests/model-catalog.test.mjs",
     "dev": "vite --host 127.0.0.1 --port 5173",
-    "build": "node desktop/clean-build.mjs && tsc -p tsconfig.json && vite build && tsc -p tsconfig.desktop.json && node desktop/copy-preload.mjs",
-    "start": "npm run build && electron .",
-    "desktop": "electron .",
+    "build": "node desktop/clean-build.mjs && npm run build:chatgpt && tsc -p tsconfig.json && vite build && tsc -p tsconfig.desktop.json && node desktop/copy-preload.mjs",
+    "start": "npm run build && npm run desktop",
+    "desktop": "node node_modules/electron/install.js && electron .",
     "pack:win": "npm run build && electron-builder --win portable",
     "pack:win:zip": "npm run build && electron-builder --win zip --x64",
     "test:extensions": "tsc -p tsconfig.desktop.json && node --test desktop/tests/chatgpt-extension.test.mjs",
-    "check:licenses": "node scripts/check-license-boundary.mjs"
+    "check:licenses": "node scripts/check-license-boundary.mjs",
+    "build:chatgpt": "tsc -p extensions/chatgpt/vendor/siwc-local/tsconfig.json && tsc -p extensions/chatgpt/tsconfig.json",
+    "check": "npm run build && npm run test:extensions && npm run test:catalog && npm run check:licenses && npm run check:public"
   },
   "dependencies": {
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "@siwc/local": "file:extensions/chatgpt/vendor/siwc-local"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",
@@ -28,7 +31,8 @@
     "electron": "^44.7.2",
     "electron-builder": "^26.15.3",
     "typescript": "^5.9.2",
-    "vite": "^7.1.3"
+    "vite": "^7.1.3",
+    "@types/proper-lockfile": "^4.1.4"
   },
   "build": {
     "appId": "personal.meeting-notes",
@@ -58,34 +62,64 @@
     "artifactName": "meetsift-${version}-win-${arch}.${ext}",
     "extraFiles": [
       {
-        "to": "LICENSE",
-        "from": "LICENSE"
+        "from": "LICENSE",
+        "to": "LICENSE"
       },
       {
-        "to": "LICENSES.md",
-        "from": "LICENSES.md"
+        "from": "LICENSES.md",
+        "to": "LICENSES.md"
       },
       {
-        "to": "README.md",
-        "from": "README.md"
+        "from": "LICENSES",
+        "to": "LICENSES"
       },
       {
+        "from": "README.md",
+        "to": "README.md"
+      },
+      {
+        "from": "docs",
+        "to": "docs",
         "filter": [
           "SETUP-WINDOWS.md",
           "PROVIDERS.md",
-          "CHATGPT-EXTENSION.md"
-        ],
-        "to": "docs",
-        "from": "docs"
+          "CHATGPT-EXTENSION.md",
+          "INSTALL.md"
+        ]
+      },
+      {
+        "from": "extensions/chatgpt",
+        "to": "extensions/chatgpt",
+        "filter": [
+          "LICENSE",
+          "LICENSE-MIT",
+          "LICENSES.md",
+          "README.md",
+          "vendor/siwc-local/LICENSE",
+          "vendor/siwc-local/PROVENANCE.md",
+          "vendor/siwc-local/THIRD_PARTY_NOTICES.md"
+        ]
+      },
+      {
+        "from": "AGENTS.md",
+        "to": "AGENTS.md"
+      },
+      {
+        "from": "CONTRIBUTING.md",
+        "to": "CONTRIBUTING.md"
+      },
+      {
+        "from": "backend/README.md",
+        "to": "backend/README.md"
       }
     ]
   },
-  "description": "Korean meeting transcription and minutes desktop app",
+  "description": "Review recordings, speakers and meeting notes in one desktop app",
   "author": {
     "name": "imjonghyuk",
     "email": "imjhyuk@gmail.com"
   },
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSES.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/ImJongHyuk/meetsift.git"

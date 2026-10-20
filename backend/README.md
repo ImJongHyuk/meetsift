@@ -9,16 +9,13 @@ Use Ubuntu under WSL2 with a Windows NVIDIA driver supporting CUDA 12.6. Verify 
 From the application root:
 
 ```bash
-bash scripts/setup-backend.sh --gpu
-backend/.venv-native/bin/python scripts/download-models.py
-export MEETING_API_TOKEN="$(backend/.venv/bin/python -c 'import secrets; print(secrets.token_urlsafe(32))')"
-export MEETING_DATA_DIR="$PWD/.local-data"
+bash scripts/setup-backend.sh --gpu --system-deps
 bash scripts/run-backend.sh
 ```
 
-The setup script creates environments only under `backend/`. The default download is MOSS plus Nemotron. Both use Transformers 5.19.0 with CUDA PyTorch 2.11.0/cu126 and Jinja2 >=3.1.6. MOSS helpers are installed from the official GitHub repository at commit `e3bdd93f8ad58418e04659818efd5fd87a0bc486`; its model snapshot is pinned to `704aa4a9c304e8520be88901e0d1960158ef5b15`. The model requires `trust_remote_code=True`, which executes custom Python from the downloaded snapshot. Review custom code before installing a different revision. This installs the inference package, not another desktop application.
+Setup installs environments, downloads pinned MOSS/Nemotron snapshots and runs CUDA plus model-worker smoke checks. It creates a persistent local connection token without printing it. See [installation and diagnostics](../docs/INSTALL.md) for prerequisites, verification levels, optional profiles and Windows automation.
 
-For the Whisper alternative, set `MEETING_INSTALL_WHISPER=1` during setup and add `--whisper` to the download command; it uses faster-whisper 1.2.1/CTranslate2 4.7.2. The optional Qwen backend profile uses `MEETING_INSTALL_QWEN=1` and `--qwen` with a separate qwen-asr 0.0.6/Transformers 4.57.6 environment; it is not exposed in the desktop UI. GPU driver compatibility depends on the host system.
+For the Whisper alternative, pass `--whisper` during setup; it uses faster-whisper 1.2.1/CTranslate2 4.7.2. The optional Qwen backend profile uses `MEETING_INSTALL_QWEN=1` and `--qwen` with a separate qwen-asr 0.0.6/Transformers 4.57.6 environment; it is not exposed in the desktop UI. GPU driver compatibility depends on the host system.
 
 Pre-existing cached models and environments are supported. Set absolute paths:
 

@@ -1,62 +1,90 @@
 # MeetSift
 
-**Turn conversations into clear meeting notes.**
+**Turn recordings into clear meeting notes.**
 
-한국어 음성을 전사하고 화자를 나누어 회의록으로 정리하는 MIT 데스크톱 앱입니다. 녹음 파일을 로컬 GPU 또는 설정한 서버·OpenRouter에서 처리하고, 원음을 들으며 문장과 화자 이름을 수정할 수 있습니다. 작성 규칙을 `.md`·`.txt`로 불러와 선택한 모델 공급자로 회의록을 만들고 Markdown·JSON으로 내보냅니다.
+A desktop workspace for transcribing recordings, reviewing who said what, and
+turning the conversation into decisions and action items. Built for Korean
+meetings, with your choice of local NVIDIA GPU, external servers, OpenRouter or
+ChatGPT for the stages each provider supports.
 
-## Windows에서 시작
+> MeetSift's own code is **MIT**. The included OpenAI ChatGPT SDK and credential
+> adapter have **noncommercial restrictions**. The complete app is not MIT-only.
+> [License scope](LICENSES.md).
 
-1. [Releases](https://github.com/ImJongHyuk/meetsift/releases)에서 **Windows x64 ZIP**을 내려받아 폴더 전체를 압축 해제합니다.
-2. [Windows·WSL2 설치 안내](docs/SETUP-WINDOWS.md)에 따라 백엔드를 준비합니다. 로컬 GPU를 사용할 때만 CUDA 환경과 모델을 추가 설치합니다.
-3. 같은 안내의 PowerShell 명령으로 백엔드 연결 환경변수를 설정한 뒤, 압축을 푼 폴더의 **`MeetSift.exe`**를 실행합니다.
+## What you can do
 
-ZIP에는 데스크톱 앱이 들어 있습니다. **WSL2, Python, FFmpeg는 별도 설치**가 필요하며 로컬 GPU를 선택하면 **CUDA 추론 환경과 모델도 필요**합니다. 실행 파일만 다른 폴더로 옮기지 마세요. 첫 모델 설치에는 인터넷과 다운로드 공간이 필요합니다. 기본 공급자에서는 음성을 로컬에서 처리하고, 외부 공급자를 선택하면 해당 서버에 전달합니다.
+- Import Galaxy Voice Recorder **M4A**, common audio formats and videos with audio.
+- Listen alongside timestamps; edit transcript text and speaker names.
+- Configure transcription, diarization and minutes independently.
+- Load writing rules from Markdown or text and export Markdown or JSON.
 
-기본 모델은 **MOSS 0.9B**, 대체 모델은 **Whisper INT8**입니다. Whisper를 쓰려면 설치 안내의 선택 단계를 추가로 진행하세요.
+The interface and default prompts are Korean. Language support depends on the
+selected model; multilingual UI and recognition quality are not guaranteed.
 
-상단 **모델·공급자 설정**에서 전사·화자 분리·회의록을 각각 로컬 GPU, 외부 서버, OpenRouter로 설정할 수 있습니다. 회의록의 기본값은 로컬 모델 서버이며 사용할 모델을 선택해야 합니다. 서버 주소·모델·API 키, 화자 API 응답 계약과 데이터 전송 범위는 [공급자 설정 안내](docs/PROVIDERS.md)를 참고하세요.
+## Get started on Windows
 
-## 가져올 수 있는 파일
-
-- 음성: WAV, MP3, M4A, AAC, FLAC, OGG/OGA, OPUS, WMA, AIF/AIFF, AMR
-- 동영상·컨테이너: MP4, M4V, MOV, MKV, WEBM, AVI, 3GP/3G2, MPEG/MPG, TS
-
-FFmpeg가 파일의 첫 번째 음성 트랙을 읽어 전사용 WAV로 변환합니다. 동영상에는 음성 트랙이 있어야 하며, 실제 처리 가능 여부는 파일 내부 코덱과 설치된 FFmpeg에 따라 달라집니다. 앱에서 원음을 재생할 수 있는 코덱은 Electron/Chromium의 지원 범위에 따릅니다.
-
-## 선택 사항: ChatGPT 확장
-
-ChatGPT 계정 연결은 기본판에 포함되지 않으며 [별도 확장](https://github.com/ImJongHyuk/meetsift-chatgpt)으로 설치합니다. 확장을 설정하면 앱에 **ChatGPT 연결**이 나타나고 공식 OpenAI 인증 화면이 브라우저에서 열립니다. 별도 Platform API 키를 입력하지 않으며, 로그인한 계정에서 허용하는 모델과 공유 한도를 사용합니다.
-
-**ChatGPT로 회의록 작성**을 누를 때 작성 규칙, 수정한 전사문, 화자 정보, 문장 ID, 시간과 검토 표시가 ChatGPT에 전송됩니다. 원음은 전송하지 않습니다. 인증 정보는 Electron 메인 프로세스에서 OS `safeStorage`로 암호화합니다.
-
-확장에 포함된 공식 SDK와 암호화 어댑터에는 **비상업 조건**이 적용됩니다. MeetSift의 MIT 라이선스가 이 조건을 바꾸지 않습니다. 설치와 기존 로그인 유지 방법은 [ChatGPT 확장 안내](docs/CHATGPT-EXTENSION.md)를 참고하세요.
-
-## 소스로 실행
-
-Git과 Node.js 22 이상이 필요합니다. 백엔드는 [설치 안내](docs/SETUP-WINDOWS.md)에 따라 먼저 실행합니다.
-
-```sh
-git clone https://github.com/ImJongHyuk/meetsift.git
-cd meetsift
-npm ci
-```
-
-Windows PowerShell에서 `MEETING_EXTERNAL_BACKEND=1`과 WSL 백엔드의 동일한 `MEETING_API_TOKEN`을 설정한 뒤 실행합니다. 토큰 전달 명령은 [설치 안내](docs/SETUP-WINDOWS.md#3-windows에서-앱-실행)에 있습니다.
+Requires **Windows 11, WSL2 Ubuntu, Git and Node.js 22.12+**.
+For local inference, install a compatible **NVIDIA Windows driver** first.
+The installer checks GPU visibility before downloading CUDA packages or models.
 
 ```powershell
-npm start
+git clone https://github.com/ImJongHyuk/meetsift.git
+cd meetsift
+.\scripts\setup-windows.ps1 -Mode Gpu -InstallSystemDependencies
+.\scripts\start-windows.ps1
 ```
 
-`npm run build`는 타입 검사와 프로덕션 빌드를 수행합니다. `npm run dev`는 브라우저 UI 개발용이며, ChatGPT 연결은 Electron에서만 사용할 수 있습니다. 백엔드 설정과 API 계약은 [backend/README.md](backend/README.md)를 참고하세요.
+Setup installs isolated Python environments, pinned MOSS and Nemotron models,
+builds the desktop app and runs CUDA/model smoke checks. It downloads several GB
+and may need your Ubuntu sudo password for system packages. It never installs GPU
+drivers. Later launches use only the final command. Local GPU setup covers the
+audio stages; minutes require ChatGPT sign-in or a configured model server.
 
-## 처리 결과와 데이터
+Prefer a prebuilt desktop? Get the [Windows ZIP](https://github.com/ImJongHyuk/meetsift/releases/latest)
+and follow the [existing ZIP setup](docs/INSTALL.md#existing-windows-zip).
 
-전사문과 회의록에는 인식·생성 오류가 있을 수 있습니다. 화자 연결과 겹침·청크 경계의 검토 표시를 원음과 대조하세요. 로컬 추론의 메모리 사용량은 모델·녹음 길이·실행 환경에 따라 달라집니다.
+**Using external audio providers?** Run setup with `-Mode Remote` instead.
+This skips GPU packages and model downloads. In **모델·공급자 설정**, configure
+both transcription and diarization before importing a recording.
 
-원음·작업 결과는 WSL의 설정한 데이터 폴더에 저장합니다. 배포 소스에 `.env`나 인증 토큰을 넣지 않으며, 설치 안내는 사용자의 컴퓨터에서 새 연결 토큰을 생성합니다.
+[Installation, verification and troubleshooting](docs/INSTALL.md) ·
+[Provider setup](docs/PROVIDERS.md) · [ChatGPT](docs/CHATGPT-EXTENSION.md)
 
-## 배포와 라이선스
+## ChatGPT included
 
-MeetSift 자체 코드는 [MIT](LICENSE)이며 상업적 이용과 수정·재배포를 허용합니다. 저작권·허가 고지는 유지해야 합니다. 의존성·모델·외부 서비스에는 각각의 조건이 적용되고, 별도 ChatGPT 확장에는 비상업 조건이 있습니다. 자세한 범위는 [라이선스 안내](LICENSES.md)를 참고하세요.
+Choose **ChatGPT 연결** and sign in through OpenAI's official browser flow.
+Eligible accounts can use their available ChatGPT plan models without a separate
+Platform API key. Availability and limits are controlled by OpenAI.
 
-저장소 공개 여부와 npm 배포 방지는 별개이며, `package.json`의 `private: true`는 실수로 npm에 게시하는 것을 막기 위한 설정입니다.
+ChatGPT receives the writing rules and reviewed transcript, including speaker
+labels and timestamps, when you generate minutes. It does not receive the
+original recording through this feature. SDK use must satisfy its
+[noncommercial terms](extensions/chatgpt/vendor/siwc-local/LICENSE), including
+the exclusion of business, employer and client operational use even without a fee.
+
+## Files and data
+
+M4A, MP3, WAV, AAC, FLAC, OGG/OGA, OPUS, WMA, AIF/AIFF, AMR and common video
+containers are accepted. FFmpeg reads the first audio track; codec support depends
+on the file and installed FFmpeg. Playback support depends on Chromium.
+
+Recordings and results stay in the configured backend data directory when local
+providers are used. External audio providers receive audio; external minutes
+providers receive text. API keys and ChatGPT credentials are encrypted by the
+desktop OS and are not exposed to the renderer or stored in job JSON.
+
+Generated text and speaker labels need review. Model memory use varies with the
+recording and hardware; chunking is not a guarantee for arbitrary recording lengths.
+
+## Development
+
+```sh
+npm ci
+npm run check
+```
+
+`npm run desktop` launches a built app; `npm run dev` runs the browser UI only.
+The ChatGPT integration lives in this repository and builds automatically.
+See [AGENTS.md](AGENTS.md) for agent-readable setup and checks,
+[backend/README.md](backend/README.md) for API details and
+[CONTRIBUTING.md](CONTRIBUTING.md) for contributions.

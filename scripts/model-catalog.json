@@ -1,0 +1,24 @@
+{
+  "models": [
+    {
+      "id": "OpenMOSS-Team/MOSS-Transcribe-Diarize",
+      "revision": "704aa4a9c304e8520be88901e0d1960158ef5b15",
+      "profile": "default"
+    },
+    {
+      "id": "nvidia/Nemotron-3-Diarization",
+      "revision": "f667ed73aee57d40cc39428eb768b4fd87a0a29e",
+      "profile": "default"
+    },
+    {
+      "id": "Systran/faster-whisper-large-v3",
+      "revision": "edaa852ec7e145841d8ffdb056a99866b5f0a478",
+      "profile": "whisper"
+    },
+    {
+      "id": "TeamUNIVA/qwen3_asr_1.7b_ko",
+      "revision": "3e66f586033753589c3effeb2c8cbce46a1ddabb",
+      "profile": "qwen"
+    }
+  ]
+}

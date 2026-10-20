@@ -1,0 +1,5 @@
+transformers==5.19.0
+Jinja2==3.1.6
+soundfile==0.13.1
+librosa==0.11.0
+moss-transcribe-diarize @ git+https://github.com/OpenMOSS/MOSS-Transcribe-Diarize.git@e3bdd93f8ad58418e04659818efd5fd87a0bc486

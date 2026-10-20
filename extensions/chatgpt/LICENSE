@@ -1,0 +1,7 @@
+MeetSift ChatGPT Extension - mixed license distribution
+
+The independently authored wrapper and integration documentation are covered by LICENSE-MIT.
+
+OpenAI's vendored SDK and copied Electron credential adapter are excluded from that grant and use the Sign-in with ChatGPT DevKit Noncommercial License v1.0 in vendor/siwc-local/LICENSE.
+
+This extension distribution is not MIT-only and does not grant unrestricted commercial use of OpenAI's contribution. See LICENSES.md for the exact component scope and required notices.

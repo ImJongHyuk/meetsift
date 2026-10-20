@@ -1,0 +1,14 @@
+{
+  "extensions/chatgpt/vendor/siwc-local/LICENSE": "d12fe9f3c01626a133398d70e672b5591c38b1819f3da852b1e3ef8da606facd",
+  "extensions/chatgpt/vendor/siwc-local/THIRD_PARTY_NOTICES.md": "43697acc19b6a64ed852a038b1e27b3877c14a7d9a039ef80dc2b0df2f602714",
+  "extensions/chatgpt/vendor/siwc-local/PROVENANCE.md": "1d93df42c223e0addd9992129f4e5d1ca1036c86ebfecca1c147a350d95b0648",
+  "extensions/chatgpt/vendor/siwc-local/package.json": "287184c7ae46f4c9668fc08b96643d5ccf4b02f1ca4e13a4ced9d658196eefd8",
+  "extensions/chatgpt/vendor/siwc-local/tsconfig.json": "61d3ded0024fd9480d547a7c36f5cd4b1c23f18b08094e36d3332f3c1eaa9bd7",
+  "extensions/chatgpt/vendor/siwc-local/src/errors.ts": "14a1f7b8c6913feb788059309b527c6ef9f25ffba8470aeb216a1559c6b678d3",
+  "extensions/chatgpt/vendor/siwc-local/src/index.ts": "ea94e148be97f91d627be98dd4535cc2a38cee4f2bfd5d94d918b2c87f351870",
+  "extensions/chatgpt/vendor/siwc-local/src/models.ts": "a1e33e85073aa2f79095ecb572c6123b329d60aa7f68cff3591c53f838ef2bd1",
+  "extensions/chatgpt/vendor/siwc-local/src/oauth.ts": "556e7afc432db0d59b14912a20fdbaa4a76220c8e7d3e404efc5430e4e1a5ba1",
+  "extensions/chatgpt/vendor/siwc-local/src/responses.ts": "66225e439c44b20d77295c800abbc0cbadcf56293cb42bc0733d226e307d3598",
+  "extensions/chatgpt/vendor/siwc-local/src/storage.ts": "51c61d3fe369441951a08642089264cbdac96d9906ebf2f59eeda131153b30a4",
+  "extensions/chatgpt/vendor/siwc-local/src/types.ts": "01f5863b62ed9d6c3b3765123cba1f0c8b73ca395520fc9ba116a16b13980fc1"
+}

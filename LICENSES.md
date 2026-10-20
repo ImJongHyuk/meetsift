@@ -1,52 +1,54 @@
-# License scope
+# Licenses
 
-MeetSift's independently authored application code and documentation are licensed
-under the [MIT License](LICENSE). The root package metadata describes that grant;
-it does not replace licenses of third-party software, model weights or services.
+## MeetSift code: MIT
 
-## MIT core
+MeetSift's independently authored code, including the ChatGPT interface and
+`extensions/chatgpt/src/index.ts`, build scripts and integration documentation,
+uses the [MIT License](LICENSES/MIT.txt). Preserve its copyright and permission
+notice when redistributing that code. The exceptions below are not relicensed.
 
-The core repository and desktop ZIP do not include the Sign-in with ChatGPT
-DevKit, its Electron credential adapter or its runtime dependencies. Local models,
-OpenRouter and OpenAI-compatible servers are available without the ChatGPT
-extension. Model weights and the separately installed FFmpeg CLI are not included.
+## OpenAI components: noncommercial
 
-## Optional ChatGPT extension
+The full desktop app includes these OpenAI-authored components:
 
-[meetsift-chatgpt](https://github.com/ImJongHyuk/meetsift-chatgpt) is distributed
-separately. It contains OpenAI's SDK and copied adapter under the
-[Sign-in with ChatGPT DevKit Noncommercial License v1.0](https://github.com/openai/sign-in-with-chatgpt-devkit/blob/0a36fefeb913055c8c7a1a29b63d82b96b2e841a/LICENSE).
-The MIT grant for MeetSift does not relicense those components or permit their
-commercial use. Section 1 of the SDK license distinguishes independently authored
-software using the SDK interface from modifications to the SDK itself.
+| Component | License |
+| --- | --- |
+| `extensions/chatgpt/vendor/siwc-local/` | [Sign-in with ChatGPT DevKit Noncommercial License v1.0](extensions/chatgpt/vendor/siwc-local/LICENSE) |
+| `extensions/chatgpt/src/credential-encryption.ts` | The same noncommercial license; copied from the DevKit Electron example |
 
-The SDK license excludes business, employer and client operational use or
-commercial advantage from its noncommercial definition, even when no fee is
-charged. Commercial use of OpenAI's contribution requires a separate written
-agreement with OpenAI. Its use/distribution restrictions do not satisfy section 6
-of the [Open Source Definition](https://opensource.org/osd).
+The SDK source is pinned to
+[`0a36fefeb913055c8c7a1a29b63d82b96b2e841a`](https://github.com/openai/sign-in-with-chatgpt-devkit/tree/0a36fefeb913055c8c7a1a29b63d82b96b2e841a).
+Its source, license, provenance and third-party notices are retained. The copied
+adapter has a source/change notice. Changes to OpenAI's code must retain its
+license and be marked as required by section 4.
 
-The extension is trusted local code, loaded only from an explicitly configured
-absolute file path. MeetSift does not automatically install, download or bundle
-it. See [extension installation](docs/CHATGPT-EXTENSION.md).
+Section 1 excludes independently authored software merely using the SDK interface
+from the definition of a Modified Work. This permits the separate MIT grant for
+MeetSift's own code; it does not expand rights in OpenAI's contribution.
 
-## Third-party components
+The SDK permits only its defined Noncommercial Purposes: personal learning,
+experimentation or development without an intended or reasonably anticipated
+commercial application. Business, employer or client operational use or commercial
+advantage is excluded even when no fee is charged. Commercial use of OpenAI's
+contribution requires a separate written agreement with OpenAI.
 
-React, Electron, npm/Python dependencies and their transitive dependencies keep
-their respective licenses. Redistributed dependencies must retain required
-copyright, license and notice files. In particular, preserve Apache notices where
-applicable and Electron's `LICENSE.electron.txt` and `LICENSES.chromium.html`.
-The latter includes notices for Chromium's bundled media components.
+**The complete repository and desktop ZIP are a mixed-license distribution, not
+an MIT-only or commercially unrestricted distribution.** Disabling ChatGPT in
+the UI does not remove the bundled SDK or change its terms. The noncommercial
+components do not meet section 6 of the [Open Source Definition](https://opensource.org/osd).
 
-Downloaded model code and weights, CUDA packages and separately installed FFmpeg
-builds have independent upstream terms. A MeetSift MIT grant does not relicense
-them. Redistributing those components requires checking their exact licenses and
-build options, rather than assuming they are MIT because MeetSift is MIT.
+## Other software, models and services
 
-## Services and branding
+npm and Python dependencies retain their own licenses. Preserve required notices,
+including Electron's `LICENSE.electron.txt` and `LICENSES.chromium.html`. The SDK's
+[third-party notices](extensions/chatgpt/vendor/siwc-local/THIRD_PARTY_NOTICES.md)
+also accompany the distribution.
 
-Software licensing does not grant hosted inference access, account entitlement
-or trademark rights. Each provider's service terms and model permissions apply.
-[OpenAI's service documentation](https://developers.openai.com/siwc/token-sharing-open-source)
-separately describes eligible ChatGPT plan usage for open-source and locally
-hosted apps and directs paid or remotely hosted integrations to an interest form.
+Model weights, model custom code, CUDA packages and separately installed FFmpeg
+have independent upstream terms. They are downloaded during explicit GPU setup,
+not bundled in the desktop ZIP. Check their exact licenses/build options before
+redistribution; MeetSift's MIT grant does not relicense them.
+
+Software licenses do not grant service access, account eligibility, plan usage
+or trademark rights. Provider terms apply separately; see the
+[official ChatGPT integration documentation](https://developers.openai.com/siwc/token-sharing-open-source).

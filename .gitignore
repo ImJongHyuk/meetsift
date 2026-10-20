@@ -2,7 +2,7 @@ node_modules/
 dist/
 dist-desktop/
 release/
-vendor/siwc-local/dist/
+extensions/chatgpt/vendor/siwc-local/dist/
 *.log
 models/
 .local-data/
@@ -43,7 +43,13 @@ outputs/
 .claude/
 .vscode/
 .idea/
-AGENTS.md
 CLAUDE.md
 .DS_Store
 Thumbs.db
+
+backend/.venv*/
+.local-tools/
+*.tar
+__pycache__/
+*.py[cod]
+.pytest_cache/

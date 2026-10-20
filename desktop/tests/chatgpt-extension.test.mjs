@@ -10,7 +10,7 @@ test('core works without an extension and rejects relative paths',async()=>{
  const missing=await loadChatExtension(undefined,host);
  assert.equal(missing.available,false);
  assert.equal((await missing.session()).status,'unavailable');
- await assert.rejects(missing.models(),/별도 확장/);
+ await assert.rejects(missing.models(),/사용할 수 없습니다/);
  assert.equal((await loadChatExtension('./relative.js',host)).available,false);
 });
 

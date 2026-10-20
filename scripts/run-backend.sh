@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 app_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+export MEETING_DATA_DIR="${MEETING_DATA_DIR:-$app_root/.local-data}"
+export HF_HUB_OFFLINE=1
+export TRANSFORMERS_OFFLINE=1
+if [[ -f "$MEETING_DATA_DIR/api-token" ]]; then export MEETING_API_TOKEN="$(cat "$MEETING_DATA_DIR/api-token")"; fi
 export MEETING_ASR_PYTHON="${MEETING_ASR_PYTHON:-$app_root/backend/.venv-asr/bin/python}"
 export MEETING_DIAR_PYTHON="${MEETING_DIAR_PYTHON:-$app_root/backend/.venv-native/bin/python}"
 export MEETING_MOSS_PYTHON="${MEETING_MOSS_PYTHON:-$MEETING_DIAR_PYTHON}"

@@ -31,7 +31,8 @@ let backendIssue='';
 const recordingExtensions=['m4a','mp3','wav','aac','flac','ogg','oga','opus','wma','aif','aiff','amr','mp4','m4v','mov','mkv','webm','avi','3gp','3g2','mpeg','mpg','ts'];
 let selectedRecording:{id:string;path:string;size:number}|undefined;
 protocol.registerSchemesAsPrivileged([{scheme:'meeting-audio', privileges:{standard:true,secure:true,supportFetchAPI:true,stream:true}}]);
-const chatgpt=await loadChatExtension(process.env.MEETSIFT_CHATGPT_EXTENSION,{appName:'MeetSift',appId:'personal-meeting-notes',storageDir:join(app.getPath('userData'),'chatgpt'),safeStorage,isReady:()=>app.isReady(),openBrowser:async url=>{if(new URL(url).origin!=='https://auth.openai.com')throw Error('Unexpected login destination');await shell.openExternal(url);}});
+const chatgptPath=process.env.MEETSIFT_DISABLE_CHATGPT==='1'?undefined:(process.env.MEETSIFT_CHATGPT_EXTENSION||join(here,'chatgpt','index.js'));
+const chatgpt=await loadChatExtension(chatgptPath,{appName:'MeetSift',appId:'personal-meeting-notes',storageDir:join(app.getPath('userData'),'chatgpt'),safeStorage,isReady:()=>app.isReady(),openBrowser:async url=>{if(new URL(url).origin!=='https://auth.openai.com')throw Error('Unexpected login destination');await shell.openExternal(url);}});
 const settingsStore=new SettingsStore(join(app.getPath('userData'),'provider-settings.json'),chatgpt.available);
 function validPath(path:unknown):asserts path is string {if(typeof path!=='string'||!/^\/api\/jobs(?:\/[a-zA-Z0-9_-]+(?:\/(?:cancel|export)(?:\?format=(?:json|markdown))?)?)?$/.test(path))throw Error('Invalid backend route');}
 async function backend(path:string,options:RequestInit={}){const response=await fetch(backendOrigin+path,{...options,headers:{...options.headers,Authorization:`Bearer ${backendToken}`}});if(!response.ok){const message=await response.text();throw Error(message.slice(0,1000)||`Backend ${response.status}`);}return response;}

@@ -5,7 +5,7 @@ import {fileURLToPath} from 'node:url';
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const files=[...new Set(execFileSync('git',['ls-files','--cached','--others','--exclude-standard','-z'],{cwd:root}).toString().split('\0').filter(Boolean))];
-const forbiddenPath=/(^|\/)(?:plans?|reports?|work|outputs?|\.codex|\.claude|\.idea|\.vscode|node_modules|release|models|recordings|meetings|user-data|\.local-data|\.venv[^/]*|__pycache__)(\/|$)|(^|\/)(?:AGENTS\.md|CLAUDE\.md|api-token|provider-settings\.json|credentials\.json|auth\.json|\.env(?:\..*)?|evaluation\.md|validation\.md)$|\.(?:log|wav|m4a|mp3|aac|flac|ogg|opus|mp4|webm|pem|key|p12|pfx|sqlite|db)$/i;
+const forbiddenPath=/(^|\/)(?:plans?|reports?|work|outputs?|\.codex|\.claude|\.idea|\.vscode|node_modules|release|models|recordings|meetings|user-data|\.local-data|\.venv[^/]*|__pycache__)(\/|$)|(^|\/)(?:CLAUDE\.md|api-token|provider-settings\.json|credentials\.json|auth\.json|\.env(?:\..*)?|evaluation\.md|validation\.md)$|\.(?:log|wav|m4a|mp3|aac|flac|ogg|opus|mp4|webm|pem|key|p12|pfx|sqlite|db)$/i;
 const rules=[
  ['personal absolute path',/(?:\/home\/|\/Users\/|\/mnt\/[a-z]\/Users\/|\b[a-z]:[\\/]Users[\\/])[^\s"'<>]+/i],
  ['private network address',/https?:\/\/(?:10(?:\.\d{1,3}){3}|192\.168(?:\.\d{1,3}){2}|172\.(?:1[6-9]|2\d|3[01])(?:\.\d{1,3}){2})(?=[:/\s"']|$)/i],

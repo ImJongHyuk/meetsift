@@ -1,0 +1,21 @@
+{
+  "name": "@siwc/local",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "jose": "^6.1.0",
+    "openai": "^7.21.0",
+    "proper-lockfile": "^4.1.2"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "x-meetsift-modifications": "Package/build paths adapted for vendoring. SDK source is unmodified. Original DevKit Noncommercial License applies."
+}
