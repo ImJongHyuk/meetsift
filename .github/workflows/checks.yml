@@ -22,5 +22,9 @@ jobs:
       - run: npm run check
       - run: npm run check:public -- --history
       - run: python3 -m pip install -r backend/requirements.txt
-      - run: python3 -m unittest discover -s scripts/tests
+      - name: Install audio test dependency
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+      - run: python3 -m unittest discover -s scripts/tests -v
       - run: for script in scripts/*.sh; do bash -n "$script"; done
