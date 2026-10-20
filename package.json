@@ -1,0 +1,93 @@
+{
+  "name": "meetsift",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "main": "dist-desktop/main.js",
+  "scripts": {
+    "check:public": "node scripts/check-public-surface.mjs",
+    "test:catalog": "tsc -p tsconfig.desktop.json && node --test desktop/tests/model-catalog.test.mjs",
+    "dev": "vite --host 127.0.0.1 --port 5173",
+    "build": "node desktop/clean-build.mjs && tsc -p tsconfig.json && vite build && tsc -p tsconfig.desktop.json && node desktop/copy-preload.mjs",
+    "start": "npm run build && electron .",
+    "desktop": "electron .",
+    "pack:win": "npm run build && electron-builder --win portable",
+    "pack:win:zip": "npm run build && electron-builder --win zip --x64",
+    "test:extensions": "tsc -p tsconfig.desktop.json && node --test desktop/tests/chatgpt-extension.test.mjs",
+    "check:licenses": "node scripts/check-license-boundary.mjs"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.2",
+    "electron": "^44.7.2",
+    "electron-builder": "^26.15.3",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.3"
+  },
+  "build": {
+    "appId": "personal.meeting-notes",
+    "productName": "MeetSift",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "dist-desktop/**",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "backend",
+        "to": "backend",
+        "filter": [
+          "meeting_backend/*.py",
+          "requirements*.txt",
+          "README.md"
+        ]
+      }
+    ],
+    "win": {
+      "target": "portable"
+    },
+    "artifactName": "meetsift-${version}-win-${arch}.${ext}",
+    "extraFiles": [
+      {
+        "to": "LICENSE",
+        "from": "LICENSE"
+      },
+      {
+        "to": "LICENSES.md",
+        "from": "LICENSES.md"
+      },
+      {
+        "to": "README.md",
+        "from": "README.md"
+      },
+      {
+        "filter": [
+          "SETUP-WINDOWS.md",
+          "PROVIDERS.md",
+          "CHATGPT-EXTENSION.md"
+        ],
+        "to": "docs",
+        "from": "docs"
+      }
+    ]
+  },
+  "description": "Korean meeting transcription and minutes desktop app",
+  "author": {
+    "name": "imjonghyuk",
+    "email": "imjhyuk@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ImJongHyuk/meetsift.git"
+  }
+}

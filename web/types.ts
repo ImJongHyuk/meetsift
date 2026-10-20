@@ -1,0 +1,12 @@
+export type Segment={id:string;start:number;end:number;text:string;speaker_id:string;speaker_name?:string;overlap:boolean;review_flags?:string[]};
+export type Job={id:string;title:string;filename:string;status:string;profile:string;duration?:number;progress?:number;error?:string;segments:Segment[];speakers:Record<string,string>;rules?:string;minutes?:string;created_at:string};
+export type Session={status:string;sharing:boolean;available:boolean;identity?:{email?:string;name?:string};error?:{message:string}};
+export type Model={slug:string;displayName:string};
+export type Stage='transcription'|'diarization'|'minutes';
+export type Provider='local'|'server'|'openrouter'|'chatgpt';
+export type StageSettings={provider:Provider;baseUrl:string;model:string;apiKey?:string;hasApiKey?:boolean;endpoint?:string;responseFormat?:string;options?:string};
+export type ProviderSettings=Record<Stage,StageSettings>;
+export type RecordingSelection={id:string;name:string;size:number};
+export type CatalogResult={models:Model[];fetchedAt:number;stale:boolean};
+export type Desktop={openRouterModels:(stage:Stage,refresh?:boolean)=>Promise<CatalogResult>;chooseRecording:()=>Promise<RecordingSelection|null>;getSettings:()=>Promise<ProviderSettings>;saveSettings:(settings:ProviderSettings)=>Promise<ProviderSettings>;testProvider:(stage:Stage,config:StageSettings)=>Promise<{message:string}>;request:(path:string,method?:string,body?:unknown)=>Promise<any>;upload:(payload:{id?:string;name:string;bytes?:ArrayBuffer;profile:string})=>Promise<Job>;session:()=>Promise<Session>;login:()=>Promise<Session>;logout:()=>Promise<Session>;cancelLogin:()=>Promise<void>;models:()=>Promise<Model[]>;generate:(payload:{model:string;transcript:string;rules:string})=>Promise<{text:string}>;cancel:()=>Promise<void>;onDelta:(callback:(delta:string)=>void)=>()=>void;onSession:(callback:(session:Session)=>void)=>()=>void};
+declare global{interface Window{meetingDesktop?:Desktop}}
