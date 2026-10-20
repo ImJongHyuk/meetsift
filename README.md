@@ -50,6 +50,9 @@ both transcription and diarization before importing a recording.
 [Installation, verification and troubleshooting](docs/INSTALL.md) ·
 [Provider setup](docs/PROVIDERS.md) · [ChatGPT](docs/CHATGPT-EXTENSION.md)
 
+Validate installation and the full audio pipeline with a real recording using
+the [GPU integration test and agent request](docs/GPU-TEST.md).
+
 ## ChatGPT included
 
 Choose **ChatGPT 연결** and sign in through OpenAI's official browser flow.

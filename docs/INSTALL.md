@@ -82,6 +82,12 @@ A successful API health check or dependency resolver run **does not establish GP
 inference**. On a machine without a visible GPU, GPU setup intentionally fails
 before installing anything. Do not interpret that as a passed GPU test.
 
+### Real-recording integration test
+
+Use the [one-command GPU test](GPU-TEST.md) to install and exercise the complete
+upload, transcription, diarization and export path with your own recording.
+The guide includes a request you can give an AI agent on a fresh machine.
+
 ### Existing Windows ZIP
 
 Keep the entire extracted ZIP together. In the cloned source checkout, pass

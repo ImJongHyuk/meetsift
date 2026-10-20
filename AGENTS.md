@@ -29,10 +29,18 @@ Read README.md, docs/INSTALL.md and LICENSES.md before installing or packaging.
 - extensions/chatgpt/: bundled adapter and pinned OpenAI SDK.
 - scripts/: installation, diagnostics and publication guards.
 
-Run npm ci, then npm run check. Run python3 -m unittest discover -s scripts/tests
-for installer/diagnostic tests. On Linux, syntax-check each script: for script in scripts/*.sh; do bash -n "$script"; done.
+Run npm ci, then npm run check. After backend setup, run
+backend/.venv/bin/python -m unittest discover -s scripts/tests in Ubuntu/WSL
+to include the GPU-free API contract test; a system Python without backend
+dependencies skips that test. On Linux, syntax-check each script:
+for script in scripts/*.sh; do bash -n "$script"; done.
 Changes to inference also require a short authorized recording on real hardware;
-inspect timestamps, speaker assignments and exports.
+inspect timestamps, speaker assignments and exports. For setup-to-recording
+verification, read docs/GPU-TEST.md and use scripts/test-gpu.ps1 (Windows) or
+python3 scripts/test-gpu-recording.py (Ubuntu), with an explicitly supplied
+recording. Set the expected --min-speakers / -MinSpeakers; use --keep-results /
+-KeepResults only for local inspection. Stop on a failed GPU preflight, test
+failure or timeout. Never label harness unit tests as real GPU inference.
 
 ## License and privacy
 

@@ -15,8 +15,12 @@ jobs:
         with:
           node-version: '22'
           cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - run: npm ci
       - run: npm run check
       - run: npm run check:public -- --history
+      - run: python3 -m pip install -r backend/requirements.txt
       - run: python3 -m unittest discover -s scripts/tests
       - run: for script in scripts/*.sh; do bash -n "$script"; done
